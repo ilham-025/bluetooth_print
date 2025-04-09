@@ -23,7 +23,6 @@ apply plugin: 'com.android.library'
 
 android {
     namespace 'com.example.bluetooth_print'
-    
     compileSdkVersion 31
 
     defaultConfig {
