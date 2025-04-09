@@ -45,7 +45,9 @@
     result(@(isConnected));
   } else if([@"isOn" isEqualToString:call.method]) {
     result(@(YES));
-  }else if([@"startScan" isEqualToString:call.method]) {
+  } else if([@"getBondedDevices" isEqualToString:call.method]) {
+    result(@[]);
+  } else if([@"startScan" isEqualToString:call.method]) {
       NSLog(@"getDevices method -> %@", call.method);
       [self.scannedPeripherals removeAllObjects];
       
