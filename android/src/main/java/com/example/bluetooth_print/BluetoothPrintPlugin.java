@@ -32,7 +32,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.*;
 
-public class BluetoothPrintPlugin implements FlutterPlugin, ActivityAware, MethodCallHandler, PluginRegistry.RequestPermissionsResultListener {
+public class BluetoothPrintPlugin implements FlutterPlugin, ActivityAware, MethodChannel.MethodCallHandler, PluginRegistry.RequestPermissionsResultListener {
 
     private static final String TAG = "BluetoothPrintPlugin";
     private static final String NAMESPACE = "bluetooth_print";
