@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
@@ -152,6 +153,9 @@ public class BluetoothPrintPlugin implements FlutterPlugin, ActivityAware, Metho
             case "isConnected":
                 result.success(threadPool != null);
                 break;
+            case "getBondedDevices":
+                getBondedDevices(result);
+                break;
             case "startScan":
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(activity, PERMISSIONS_LOCATION, REQUEST_FINE_LOCATION_PERMISSIONS);
@@ -186,6 +190,26 @@ public class BluetoothPrintPlugin implements FlutterPlugin, ActivityAware, Metho
                 result.notImplemented();
                 break;
         }
+    }
+
+    private void getBondedDevices(MethodChannel.Result result) {
+        if (mBluetoothAdapter == null) {
+            result.error("unavailable", "Bluetooth not available", null);
+            return;
+        }
+
+        Set<BluetoothDevice> bondedDevices = mBluetoothAdapter.getBondedDevices();
+        List<Map<String, Object>> devices = new ArrayList<>();
+
+        for (BluetoothDevice device : bondedDevices) {
+            Map<String, Object> ret = new HashMap<>();
+            ret.put("address", device.getAddress());
+            ret.put("name", device.getName());
+            ret.put("type", device.getType()); // Optional
+            devices.add(ret);
+        }
+
+        result.success(devices);
     }
 
     private void state(MethodChannel.Result result) {
