@@ -118,6 +118,11 @@ class BluetoothPrint {
     return _scanResults.value;
   }
 
+  Future<List<Map<String, dynamic>>> getBondedDevices() async {
+    final List<dynamic> devices = await _channel.invokeMethod('getBondedDevices');
+    return devices.cast<Map<String, dynamic>>();
+  }
+  
   /// Stops a scan for Bluetooth Low Energy devices
   Future stopScan() async {
     await _channel.invokeMethod('stopScan');
